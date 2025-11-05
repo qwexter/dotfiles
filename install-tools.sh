@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Exit on error
-set -e
+set -u
 
 # Function to install packages on Ubuntu
 install_ubuntu() {
     echo "Installing packages for Ubuntu..."
     sudo apt-get update
-    sudo apt-get install -y tmux golang git zsh
+    sudo apt-get install -y tmux golang git zsh ripgrep fzf
 
     # Install Neovim nightly
     echo "Installing Neovim nightly..."
@@ -19,7 +19,7 @@ install_ubuntu() {
 # Function to install packages on Arch Linux
 install_arch() {
     echo "Installing packages for Arch Linux..."
-    sudo pacman -Syu --noconfirm tmux go git zsh
+    sudo pacman -Syu --noconfirm tmux go git zsh ripgrep fzf yay
 
     # Install Neovim nightly from AUR (assuming yay is installed)
     echo "Installing Neovim nightly from AUR..."
@@ -51,6 +51,9 @@ fi
 
 # Change default shell to zsh
 echo "Changing default shell to zsh..."
-sudo chsh -s $(which zsh) $USER
+sudo chsh -s $(which zsh) "$USER"
+
+echo "Install zinit"
+bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 
 echo "All tools installed successfully!"
