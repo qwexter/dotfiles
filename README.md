@@ -1,3 +1,45 @@
+# Tested
+Arch:
+
+1. Create a user:
+
+```sh
+useradd -m -G wheel -s /bin/bash %s
+passwd %s
+```
+Don't forget to set a password for root too (if not).
+
+2. Install sudo and nano (or any other editor)
+
+```sh
+pacman -S nano sudo
+```
+
+3. Enable sudo for wheel group:
+```bash
+EDITOR=nano visudo
+# Uncomment this line:
+# %wheel ALL=(ALL:ALL) ALL
+```
+
+Ubuntu:
+Same logic, a bit different commands:
+
+```bash
+adduser yourusername
+usermod -aG sudo yourusername
+apt-get update
+apt-get install nano sudo curl
+su - yourusername
+```
+
+Install same apps: 
+
+For linux:
+```bash
+bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/qwexter/dotfiles/refs/heads/main/install-tools.sh)"
+```
+
 # Dotfiles
 
 This repository contains my personal dotfiles for macOS, Windows 11 (via WSL2), and Linux. The goal is to create a minimal, consistent, and cross-platform development environment.
