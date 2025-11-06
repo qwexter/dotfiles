@@ -56,6 +56,6 @@ echo "Changing default shell to zsh..."
 sudo chsh -s $(which zsh) "$USER"
 
 echo "Install zinit"
-bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+sudo bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 
 echo "All tools installed successfully!"
