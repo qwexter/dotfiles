@@ -1,23 +1,20 @@
-#!/bin/bash
+#!/usr/bin/enc bash
 
 # Get the directory of this script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# --- Git Configuration ---
-if [ -n "$1" ] && [ -n "$2" ]; then
-  git config --global user.name "$1"
-  git config --global user.email "$2"
-fi
 
 # --- Symlink Function ---
 create_symlink() {
   local source=$1
   local destination=$2
-
+  
   if [ -L "${destination}" ]; then
     echo "Symlink already exists: ${destination}"
   elif [ -e "${destination}" ]; then
-    echo "File already exists and is not a symlink: ${destination}"
+    echo "File exists at ${destination}, backing up and creating symlink..."
+    mv "${destination}" "${destination}.backup.$(date +%Y%m%d_%H%M%S)"
+    ln -s "${source}" "${destination}"
+    echo "Created symlink: ${destination} (old file backed up)"
   else
     ln -s "${source}" "${destination}"
     echo "Created symlink: ${destination}"
@@ -25,15 +22,12 @@ create_symlink() {
 }
 
 # --- Create Directories ---
-mkdir -p "$HOME/.dotfiles"
 mkdir -p "$HOME/.config"
 
 # --- Symlink Shared Files ---
 create_symlink "$DIR/shared/.gitconfig" "$HOME/.gitconfig"
 create_symlink "$DIR/shared/.zshrc" "$HOME/.zshrc"
 create_symlink "$DIR/shared/.tmux.conf" "$HOME/.tmux.conf"
-create_symlink "$DIR/shared/.gitconfig.work" "$HOME/.dotfiles/.gitconfig.work"
-create_symlink "$DIR/shared/ssh" "$HOME/.dotfiles/ssh"
 
 # --- Symlink Neovim and Tmux Configuration ---
 create_symlink "$DIR/nvim" "$HOME/.config/nvim"
@@ -50,5 +44,6 @@ if [[ "$(uname)" == "Linux" ]]; then
   create_symlink "$DIR/linux/.zprofile" "$HOME/.zprofile"
 fi
 
-# Windows-specific setup would go here
-# You might need a different script (e.g., a PowerShell script) for Windows
+echo ""
+echo "Dotfiles installation complete!"
+echo "Backed up files are saved with .backup.TIMESTAMP extension"
