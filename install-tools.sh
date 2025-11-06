@@ -1,13 +1,31 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Exit on error
-set -u
+set -eu
+
+# Function to generate locales
+generate_locales() {
+    echo "Generating locales..."
+    if [[ "$OS" == "Ubuntu" ]]; then
+        sudo locale-gen en_US.UTF-8
+        sudo update-locale LANG=en_US.UTF-8
+    elif [[ "$OS" == "Arch Linux" ]]; then
+        # Uncomment en_US.UTF-8 in locale.gen if not already
+        sudo sed -i 's/^#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
+        sudo locale-gen
+        echo "LANG=en_US.UTF-8" | sudo tee /etc/locale.conf
+    fi
+    
+    # Source locale settings immediately
+    if [ -f /etc/profile.d/locale.sh ]; then
+        source /etc/profile.d/locale.sh
+    fi
+}
 
 # Function to install packages on Ubuntu
 install_ubuntu() {
     echo "Installing packages for Ubuntu..."
     sudo apt-get update
-    sudo apt-get install -y tmux golang git zsh ripgrep fzf coreutils base-devel
+    sudo apt-get install -y tmux golang git zsh ripgrep fzf build-essential locales
 
     # Install Neovim nightly
     echo "Installing Neovim nightly..."
@@ -18,17 +36,23 @@ install_ubuntu() {
 
 # Function to install packages on Arch Linux
 install_arch() {
-	  echo "Moving to home ~"
-		cd ~
+    echo "Moving to home ~"
+    cd ~
     echo "Installing packages for Arch Linux..."
     sudo pacman -Syu --noconfirm base-devel coreutils tmux go git zsh ripgrep fzf
 
-    # Install Neovim nightly from AUR (assuming yay is installed)
-    echo "Installing Neovim nightly from AUR..."
+    # Install yay if not present (without sudo)
     if ! command -v yay &> /dev/null; then
-        echo "yay is not installed. Installing."
-				git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+        echo "yay is not installed. Installing..."
+        git clone https://aur.archlinux.org/yay.git
+        cd yay
+        makepkg -si --noconfirm
+        cd ..
+        rm -rf yay
     fi
+    
+    # Install Neovim nightly from AUR
+    echo "Installing Neovim nightly from AUR..."
     yay -S --noconfirm neovim-nightly-bin
 }
 
@@ -51,11 +75,16 @@ else
     exit 1
 fi
 
+# Generate locales and source them
+generate_locales
+
 # Change default shell to zsh
 echo "Changing default shell to zsh..."
 sudo chsh -s $(which zsh) "$USER"
 
-echo "Install zinit"
-sudo bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+# Install zinit (doesn't need sudo)
+echo "Installing zinit..."
+bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 
 echo "All tools installed successfully!"
+echo "Locale settings have been applied. Please log out and log back in for the shell change to take effect."
