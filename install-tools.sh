@@ -19,13 +19,13 @@ install_ubuntu() {
 # Function to install packages on Arch Linux
 install_arch() {
     echo "Installing packages for Arch Linux..."
-    sudo pacman -Syu --noconfirm tmux go git zsh ripgrep fzf yay
+    sudo pacman -Syu --noconfirm base-devel tmux go git zsh ripgrep fzf
 
     # Install Neovim nightly from AUR (assuming yay is installed)
     echo "Installing Neovim nightly from AUR..."
     if ! command -v yay &> /dev/null; then
-        echo "yay is not installed. Please install it first."
-        exit 1
+        echo "yay is not installed. Installing."
+				sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
     fi
     yay -S --noconfirm neovim-nightly-bin
 }
