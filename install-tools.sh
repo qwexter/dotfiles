@@ -7,7 +7,7 @@ set -u
 install_ubuntu() {
     echo "Installing packages for Ubuntu..."
     sudo apt-get update
-    sudo apt-get install -y tmux golang git zsh ripgrep fzf
+    sudo apt-get install -y tmux golang git zsh ripgrep fzf coreutils base-devel
 
     # Install Neovim nightly
     echo "Installing Neovim nightly..."
@@ -21,7 +21,7 @@ install_arch() {
 	  echo "Moving to home ~"
 		cd ~
     echo "Installing packages for Arch Linux..."
-    sudo pacman -Syu --noconfirm base-devel tmux go git zsh ripgrep fzf
+    sudo pacman -Syu --noconfirm base-devel coreutils tmux go git zsh ripgrep fzf
 
     # Install Neovim nightly from AUR (assuming yay is installed)
     echo "Installing Neovim nightly from AUR..."
