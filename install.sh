@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Get the directory of this script
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$(pwd)"
 
 # --- Symlink Function ---
 create_symlink() {
@@ -26,7 +26,7 @@ mkdir -p "$HOME/.config"
 
 # --- Symlink Shared Files ---
 create_symlink "$DIR/shared/.gitconfig" "$HOME/.gitconfig"
-create_symlink "$DIR/shared/.zshrc" "$HOME/.zshrc"
+create_symlink "$DIR/.zshrc" "$HOME/.zshrc"
 create_symlink "$DIR/shared/.tmux.conf" "$HOME/.tmux.conf"
 
 # --- Symlink Neovim and Tmux Configuration ---

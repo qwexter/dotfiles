@@ -29,6 +29,9 @@ alias ip='ip -c=auto'
 
 export TERM="tmux-256color"
 
+# fast nav to dots
+alias cdd='cd ~/.dotfiles'
+
 # Use modern completion system
 autoload -Uz compinit
 compinit
