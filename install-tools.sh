@@ -35,13 +35,17 @@ install_shared() {
 install_ubuntu() {
     echo "Installing packages for Ubuntu..."
     sudo apt-get update
-    sudo apt-get install -y tmux golang git zsh ripgrep fzf build-essential locales shellcheck npm
+    sudo apt-get install -y tmux golang git zsh ripgrep fzf build-essential locales shellcheck npm jq
 
     # Install Neovim nightly
     echo "Installing Neovim nightly..."
     sudo add-apt-repository -y ppa:neovim-ppa/unstable
     sudo apt-get update
     sudo apt-get install -y neovim
+
+		# Install node 20 (at least need for wsl)
+		curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+		sudo apt-get install -y nodejs
 
     install_shared
 }
