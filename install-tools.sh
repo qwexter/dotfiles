@@ -51,7 +51,7 @@ install_arch() {
     echo "Moving to home ~"
     cd ~
     echo "Installing packages for Arch Linux..."
-    sudo pacman -Syu --noconfirm base-devel coreutils tmux go git zsh ripgrep fzf shellcheck npm
+    sudo pacman -Syu --noconfirm base-devel coreutils tmux go git zsh ripgrep fzf shellcheck npm less
 
     # Install yay if not present (without sudo)
     if ! command -v yay &> /dev/null; then
