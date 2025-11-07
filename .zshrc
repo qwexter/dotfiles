@@ -21,6 +21,9 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 setopt histignorealldups sharehistory inc_append_history HIST_IGNORE_SPACE
 
+# export for gopath
+export PATH="$PATH:$HOME/go/bin"
+
 # coloring
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
@@ -31,6 +34,7 @@ export TERM="tmux-256color"
 
 # fast nav to dots
 alias cdd='cd ~/.dotfiles'
+alias cdp='cd ~/projects'
 
 # shorter nvim -> vim
 alias vim='nvim'
