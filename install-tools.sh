@@ -21,17 +21,29 @@ generate_locales() {
     fi
 }
 
+install_shared() {
+    # Install bash-language-server
+    echo "Installing bash-language-server..."
+    sudo npm install -g bash-language-server
+
+    # Install gopls
+    echo "Installing gopls..."
+    go install golang.org/x/tools/gopls@latest
+}
+
 # Function to install packages on Ubuntu
 install_ubuntu() {
     echo "Installing packages for Ubuntu..."
     sudo apt-get update
-    sudo apt-get install -y tmux golang git zsh ripgrep fzf build-essential locales
+    sudo apt-get install -y tmux golang git zsh ripgrep fzf build-essential locales shellcheck npm
 
     # Install Neovim nightly
     echo "Installing Neovim nightly..."
     sudo add-apt-repository -y ppa:neovim-ppa/unstable
     sudo apt-get update
     sudo apt-get install -y neovim
+
+    install_shared
 }
 
 # Function to install packages on Arch Linux
@@ -39,7 +51,7 @@ install_arch() {
     echo "Moving to home ~"
     cd ~
     echo "Installing packages for Arch Linux..."
-    sudo pacman -Syu --noconfirm base-devel coreutils tmux go git zsh ripgrep fzf
+    sudo pacman -Syu --noconfirm base-devel coreutils tmux go git zsh ripgrep fzf shellcheck npm
 
     # Install yay if not present (without sudo)
     if ! command -v yay &> /dev/null; then
@@ -54,6 +66,8 @@ install_arch() {
     # Install Neovim nightly from AUR
     echo "Installing Neovim nightly from AUR..."
     yay -S --noconfirm neovim-nightly-bin
+    
+    install_shared
 }
 
 # Detect OS
