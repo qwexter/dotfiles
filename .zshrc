@@ -32,6 +32,9 @@ export TERM="tmux-256color"
 # fast nav to dots
 alias cdd='cd ~/.dotfiles'
 
+# shorter nvim -> vim
+alias vim='nvim'
+
 # Use modern completion system
 autoload -Uz compinit
 compinit
