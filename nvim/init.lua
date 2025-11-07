@@ -3,4 +3,4 @@ require("options")
 require("keymaps")
 require("plugins")
 require("colors")
-
+require("lsp")
