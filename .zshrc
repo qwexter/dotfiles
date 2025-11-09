@@ -34,6 +34,7 @@ export TERM="tmux-256color"
 
 # fast nav to dots
 alias cdd='cd ~/.dotfiles'
+# fast nav to projects
 alias cdp='cd ~/projects'
 
 # shorter nvim -> vim

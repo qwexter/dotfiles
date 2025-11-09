@@ -1,7 +1,3 @@
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
-
-# Ignore user-specific files
-.local
-.config/user-dirs.dirs

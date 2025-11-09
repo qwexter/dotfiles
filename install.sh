@@ -23,6 +23,7 @@ create_symlink() {
 
 # --- Create Directories ---
 mkdir -p "$HOME/.config"
+mkdir -p "$HOME/projects"
 
 # --- Symlink Shared Files ---
 create_symlink "$DIR/shared/.gitconfig" "$HOME/.gitconfig"

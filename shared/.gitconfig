@@ -1,12 +1,6 @@
 [user]
-  name = Your Name
-  email = your.email@example.com
-
-[alias]
-  co = checkout
-  br = branch
-  ci = commit
-  st = status
+	name = put a name here 
+	email = put an email here
 
 [core]
   editor = vim
