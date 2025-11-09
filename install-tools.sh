@@ -35,7 +35,7 @@ install_shared() {
 install_ubuntu() {
     echo "Installing packages for Ubuntu..."
     sudo apt-get update
-    sudo apt-get install -y tmux golang git zsh ripgrep fzf build-essential locales shellcheck npm jq
+    sudo apt-get install -y tmux golang git zsh ripgrep fzf build-essential locales shellcheck npm jq aspell
 
     # Install Neovim nightly
     echo "Installing Neovim nightly..."
@@ -55,7 +55,7 @@ install_arch() {
     echo "Moving to home ~"
     cd ~
     echo "Installing packages for Arch Linux..."
-    sudo pacman -Syu --noconfirm base-devel coreutils tmux go git zsh ripgrep fzf shellcheck npm less
+    sudo pacman -Syu --noconfirm base-devel coreutils tmux go git zsh ripgrep fzf shellcheck npm less aspell
 
     # Install yay if not present (without sudo)
     if ! command -v yay &> /dev/null; then
