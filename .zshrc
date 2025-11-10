@@ -1,3 +1,11 @@
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} %F{220}The clone has failed.%f%b"
+fi
 # zinit setup
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
@@ -21,6 +29,8 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 setopt histignorealldups sharehistory inc_append_history HIST_IGNORE_SPACE
 
+
+export XDG_CONFIG_HOME=~/.config
 # export for gopath
 export PATH="$PATH:$HOME/go/bin"
 # export for pipx
@@ -51,7 +61,10 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
+# Set up colors for ls
+if command -v dircolors &> /dev/null; then
+    eval "$(dircolors -b)"
+fi
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
