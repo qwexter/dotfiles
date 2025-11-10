@@ -26,7 +26,6 @@ mkdir -p "$HOME/.config"
 mkdir -p "$HOME/projects"
 
 # --- Symlink Shared Files ---
-create_symlink "$DIR/shared/.gitconfig" "$HOME/.gitconfig"
 create_symlink "$DIR/.zshrc" "$HOME/.zshrc"
 create_symlink "$DIR/shared/.tmux.conf" "$HOME/.tmux.conf"
 

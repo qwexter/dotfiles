@@ -1,9 +1,0 @@
-[user]
-	name = put a name here 
-	email = put an email here
-
-[core]
-  editor = vim
-
-[includeIf "gitdir:~/work/"]
-  path = ~/.dotfiles/shared/.gitconfig.work
