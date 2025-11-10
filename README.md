@@ -1,16 +1,26 @@
-# Tested
-Arch:
+# dotfiles
+
+A simple solution to share the same UX across different platforms (macOS, Ubuntu, and Arch including WSL2).
+
+This isn't about 10x productivity—it's a simple way to bootstrap WSL2 or plain Linux when needed. Used mainly for bash scripts, small Golang services, internal apps, and DevOps routines.
+
+**Please note:** This repo isn't a production-high-grade-state-of-the-art-rocket-science-elonmasked solution. It's simple enough to be used super rarely. I haven't touched my MacBook setup for 3-4 years, and I replace or wipe WSL2 distros 1-2 times per year or install on bare-metal. Oh, and it has security flaws, but I understand them and take the risks.
+
+## On Linux
+
+<details>
+<summary>Don't forget to set up a user and supportive apps</summary>
+
+**Arch:**
 
 1. Create a user:
-
 ```sh
 useradd -m -G wheel -s /bin/bash %s
 passwd %s
 ```
-Don't forget to set a password for root too (if not).
+Don't forget to set a password for root too (if not set).
 
-2. Install sudo and nano (or any other editor)
-
+2. Install sudo and nano (or any other editor):
 ```sh
 pacman -S nano sudo
 ```
@@ -22,9 +32,9 @@ EDITOR=nano visudo
 # %wheel ALL=(ALL:ALL) ALL
 ```
 
-Ubuntu:
-Same logic, a bit different commands:
+**Ubuntu:**
 
+Same logic, slightly different commands:
 ```bash
 adduser yourusername
 usermod -aG sudo yourusername
@@ -33,79 +43,47 @@ apt-get install nano sudo curl
 su - yourusername
 ```
 
-Install same apps: 
+</details>
 
-For linux:
+Install shared apps:
 ```bash
 bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/qwexter/dotfiles/refs/heads/main/install-tools.sh)"
 ```
 
-# Dotfiles
+This installs:
+- **Core:** tmux, git, zsh, neovim (nightly), curl, unzip
+- **Search:** ripgrep, fzf
+- **Development:** golang, shellcheck, jq, aspell
+- **Build:** build-essential (Ubuntu) / base-devel (Arch)
+- **Language servers:** bash-language-server (npm), gopls (go)
 
-This repository contains my personal dotfiles for macOS, Windows 11 (via WSL2), and Linux. The goal is to create a minimal, consistent, and cross-platform development environment.
+Next, set up links to configurations:
+```bash
+git clone https://github.com/yourusername/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 
-## Features
+# Setup symlinks
+./setup_env.sh
+```
 
-- **Cross-Platform:** Supports macOS, Linux (Ubuntu, Arch), and Windows 11 (WSL2).
-- **Zsh Shell:** Uses Zsh as the default shell for a consistent experience.
-- **Neovim Configuration:** Includes a customized Neovim setup with LSP support.
-- **Tmux Configuration:** Provides a shared tmux setup for session management.
-- **Git Configuration:** Separates personal and work Git configurations.
-- **Automated Installation:** Scripts to automate the installation of tools and dotfiles.
+## macOS
 
-## Configured Tools
+Same approach but uses a different script to install shared apps (doesn't include Xcode tools setup yet):
+```bash
+bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/qwexter/dotfiles/refs/heads/main/install-tools-macos.sh)"
+```
 
-- **[Zsh](https://www.zsh.org/):** A powerful and customizable shell.
-- **[Neovim](https://neovim.io/):** A modern and highly extensible text editor.
-- **[Tmux](https://github.com/tmux/tmux/wiki):** A terminal multiplexer for managing multiple terminal sessions.
-- **[Git](https://git-scm.com/):** A distributed version control system.
-- **[Go](https://golang.org/):** A statically typed, compiled programming language.
+Then use the same configuration setup:
+```bash
+git clone https://github.com/yourusername/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 
-## Installation
+# Setup symlinks
+./setup_env.sh
+```
 
-1.  **Clone the repository:**
+## For Future Me
 
-    ```bash
-    git clone https://github.com/your-username/dotfiles.git ~/.dotfiles
-    ```
+Be very careful if you use any LLM to change scripts or layout setup here—at least check that the result doesn't expose any real git-related keys, etc. In general, keep an eye on git configuration. It seems better to manage it individually per working project. For WSL, you can share personal keys, or just create individual ones per environment.
 
-2.  **Install tools:**
-
-    -   **macOS:**
-
-        ```bash
-        ~/.dotfiles/install-tools-macos.sh
-        ```
-
-    -   **Linux (Ubuntu/Arch):**
-
-        ```bash
-        ~/.dotfiles/install-tools.sh
-        ```
-
-3.  **Install dotfiles:**
-
-    ```bash
-    ~/.dotfiles/install.sh
-    ```
-
-## Usage
-
-### Git Configuration
-
-This setup allows you to maintain separate Git configurations for personal and work projects.
-
--   **Personal:** The default Git configuration uses the email address specified in `shared/.gitconfig`.
--   **Work:** If a repository is located in the `~/work/` directory, the email address from `shared/.gitconfig.work` will be used. You can customize this directory in `shared/.gitconfig`.
-
-### SSH Keys
-
-The `shared/ssh/ssh-add.sh` script automatically adds your SSH keys to the `ssh-agent`. You can add machine-specific keys by creating a `~/.ssh/ssh-add-local.sh` file.
-
-### Neovim
-
-The Neovim configuration is located in the `nvim/` directory. It includes LSP support for Go and Bash, a custom color scheme, and key mappings.
-
-### Tmux
-
-The tmux configuration is located in `shared/.tmux.conf`. It includes a custom status bar that displays the current Git branch.
+As an alternative and better solution, try [chezmoi](https://www.chezmoi.io/), [stow](https://www.gnu.org/software/stow/), or [yadm](https://yadm.io/). They're better, and _chezmoi_ and _yadm_ handle some security flaws.
