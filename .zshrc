@@ -23,6 +23,8 @@ setopt histignorealldups sharehistory inc_append_history HIST_IGNORE_SPACE
 
 # export for gopath
 export PATH="$PATH:$HOME/go/bin"
+# export for pipx
+export PATH="$PATH:/Users/al/.local/bin"
 
 # coloring
 alias ls='ls --color=auto'
@@ -67,3 +69,8 @@ zinit wait lucid for \
     gradle/gradle-completion
 zinit snippet OMZP::fzf    # FZF completion snippet
 zinit snippet OMZP::git    # Git completion snippet
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
