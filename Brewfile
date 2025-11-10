@@ -5,3 +5,4 @@ brew "zsh"
 brew "neovim", args: ["HEAD"]
 brew "ghostty"
 brew "fzf"
+brew "ripgrep"
