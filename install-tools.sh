@@ -100,9 +100,5 @@ generate_locales
 echo "Changing default shell to zsh..."
 sudo chsh -s $(which zsh) "$USER"
 
-# Install zinit (doesn't need sudo)
-echo "Installing zinit..."
-bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
-
 echo "All tools installed successfully!"
 echo "Locale settings have been applied. Please log out and log back in for the shell change to take effect."
